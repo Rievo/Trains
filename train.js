@@ -64,15 +64,20 @@ Train.prototype.update = function(deltaTime){
 		var dist = p5.Vector.dist(this.pos, this.currentSegment.target.pos);
 
 		if(dist <= 0){ //Get next segment
-			this.line.attachToNextSegment(this);
+			this.doInStation();
 		}
 	}else{	//Check if my position is at the line source
 		var dist = p5.Vector.dist(this.pos, this.currentSegment.source.pos);
 
 		if(dist <= 0){
-			this.line.attachToNextSegment(this);
+			this.doInStation();
 		}
 	}
+}
+
+
+Train.prototype.doInStation = function(){
+	this.line.attachToNextSegment(this);
 }
 
 Train.prototype.display = function(){

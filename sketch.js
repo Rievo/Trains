@@ -7,6 +7,8 @@ var panelW = 20;
 
 var mouse;
 
+var controls = {};
+
 
 function setup(){
 	createCanvas(500,500);
@@ -14,6 +16,9 @@ function setup(){
 	createTest();
 	
 	mouse = createVector(0,0);
+
+
+	createControls();
 	
 }
 
@@ -48,17 +53,64 @@ function createTest(){
 }
 
 
-/*
+
+
+function createControls(){
+	var addStationButton = createButton('Add station');
+  	addStationButton.position(10, 500);
+  	addStationButton.mousePressed(setCreatingStation);
+
+
+
+  	var createLineButton = createButton('Create line');
+  	createLineButton.position(100, 500);
+  	createLineButton.mousePressed(setCreatingLine);
+
+}
+
+
+function setCreatingStation(){
+	controls.addingStation = true;
+}
+
+
+function cancelCreatingStation(){
+	controls.addingStation = false;
+}
+
+function setCreatingLine(){
+	var l = new Line();
+	l.color.randomize();
+
+	lines.push(l);
+}
+
+
+function cancelCreatingLine(){
+	
+}
+
+
+
+
 function mouseClicked(){
-	for(var i = 0; i< trains.length; i++){
-		var t = trains[i];
-		if(t.mouseIn()){
-			t.selected = !t.selected;
-		}else{
-			t.selected = false;
+
+	if(mouseX < 500 && mouseY < 500){ //It is inside the canvas?
+
+
+
+		if(controls.addingStation == true){
+
+			var s = new Station(mouseX, mouseY);
+			stations.push(s);
+
+			cancelCreatingStation();
 		}
 	}
-}*/
+
+
+	
+}
 
 /*
 function createTest(){
@@ -118,11 +170,48 @@ function draw(){
 	}
 	
 
-	
-	
 	for(var i = 0; i< trains.length; i++){
 		var t = trains[i];
 		t.update();
 		t.display();
 	}
+
+
+	this.drawLinesInfo();
 }
+
+
+
+
+
+function drawLinesInfo(){
+
+	var infoW = 100;
+	var infoH = 100;
+
+	var hdiv = infoH / lines.length;
+
+	var rectStart = 500 - infoH;
+
+
+	fill(200);
+	rect(0, rectStart, infoW, infoH);
+
+
+
+
+	for(var i = 0; i< lines.length; i++){
+		var l = lines[i];
+		
+		l.color.setFill();
+		stroke(0);
+		rect(0, rectStart + (i * hdiv), infoW, infoH);
+	}
+
+}
+
+
+
+
+
+

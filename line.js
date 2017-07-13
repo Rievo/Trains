@@ -43,14 +43,11 @@ Line.prototype.addTrain = function(t){
 
 Line.prototype.attachToNextSegment = function(t){
 
-	console.log("attach to next segment");
 
 	if(t.fromStoT == true && t.currentSegment == this.segments[this.segments.length -1]){ //End of the line
-		console.log("END OF LINE");
 		t.fromStoT = false;
 	} else if(t.fromStoT == false && t.currentSegment == this.segments[0]){
 		t.fromStoT = true;
-		console.log("Start OF LINE");
 	}else{
 
 		//Get the index for this segment
@@ -62,8 +59,6 @@ Line.prototype.attachToNextSegment = function(t){
 			nextIndex  = this.getIndexForSegment(t.currentSegment) - 1;
 		}
 
-		
-		console.log("nextIndex", nextIndex)
 		t.currentSegment = this.segments[nextIndex];
 	}
 
