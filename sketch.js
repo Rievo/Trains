@@ -14,30 +14,41 @@ function setup(){
 	createTest();
 	
 	mouse = createVector(0,0);
-	/*var s = new Station(100,200);
-	stations.push(s);
 	
-	var t = new Station(400,200);
-	stations.push(t);
-	
-	var u = new Station(250, 400);
-	stations.push(u);
-	
-	
-	var l = new LineSegment(s,t);
-	lines.push(l);
-	
-	var su = new LineSegment(s,u);
-	lines.push(su);
-	
-	
-	var train = new Train(l);
-	trains.push(train);
-	
-	var sut = new Train(su);
-	trains.push(sut);*/
 }
 
+
+function createTest(){
+
+	var s = new Station(100, 200);
+	stations.push(s);
+
+	var t = new Station(200, 200);
+	stations.push(t);
+
+	var v = new Station(300, 200);
+	stations.push(v);
+
+
+
+	//Create a line
+	var line = new Line(s,v);
+
+	//Create the segments
+	var s1 = new LineSegment(s,t);
+	var s2 = new LineSegment(t,v);
+
+	line.addSegment(s1);
+	line.addSegment(s2);
+
+	lines.push(line);
+
+	var train = new Train(line);
+	trains.push(train);
+}
+
+
+/*
 function mouseClicked(){
 	for(var i = 0; i< trains.length; i++){
 		var t = trains[i];
@@ -47,8 +58,9 @@ function mouseClicked(){
 			t.selected = false;
 		}
 	}
-}
+}*/
 
+/*
 function createTest(){
 	var scount = 20;
 	
@@ -88,7 +100,7 @@ function createTest(){
 		}
 		
 	}
-}
+}*/
 
 function draw(){
 	background(51);

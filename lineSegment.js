@@ -1,10 +1,12 @@
 function LineSegment(s, t){
 	this.source = s;
 	this.target = t;
+
+	this.parent = undefined;
 }
 
 
 LineSegment.prototype.display = function(){
-	stroke(200, 100, 200);
+	this.parent.color.setStroke();
 	line(this.source.pos.x, this.source.pos.y, this.target.pos.x, this.target.pos.y);
 }

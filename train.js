@@ -4,11 +4,13 @@
 //-------------------
 
 function Train(line){
-	this.pos = createVector(line.source.pos.x, line.source.pos.y);
+	this.pos = createVector(line.start.pos.x, line.start.pos.y);
 	
 	this.line = line;
 	
-	this.speed = random();
+	//this.speed = random();
+
+	this.speed = 1;
 	
 	this.fromStoT = true;
 	
@@ -18,6 +20,10 @@ function Train(line){
 	this.bigSize = 15;
 	
 	this.id = "";
+
+	this.currentSegment = undefined;
+
+	line.addTrain(this);
 }
 
 Train.prototype.setId = function(identifier){
@@ -25,14 +31,24 @@ Train.prototype.setId = function(identifier){
 }
 
 Train.prototype.update = function(deltaTime){
+
+
+
+	if(this.currentSegment == undefined){
+		console.log("I don't know where I am");
+		return;
+	}
 	
+
+
+
 	var vector;
 	
 	if(this.fromStoT == true){
-		vector = p5.Vector.sub(this.line.target.pos, this.line.source.pos);
+		vector = p5.Vector.sub(this.currentSegment.target.pos, this.currentSegment.source.pos);
 		
 	}else{
-		vector = p5.Vector.sub(this.line.source.pos, this.line.target.pos);
+		vector = p5.Vector.sub(this.currentSegment.source.pos, this.currentSegment.target.pos);
 	}
 	
 	//this.pos.x = this.pos.x +1;
@@ -42,16 +58,19 @@ Train.prototype.update = function(deltaTime){
 	this.pos.add(vector);
 	
 	
-	//Check if end of Line
+	
+	//Check if end of segment
 	if(this.fromStoT == true){ //Check if my position is at the line target
-		var dist = p5.Vector.dist(this.pos, this.line.target.pos);
-		if(dist <= 5){
-			this.fromStoT = false;
+		var dist = p5.Vector.dist(this.pos, this.currentSegment.target.pos);
+
+		if(dist <= 0){ //Get next segment
+			this.line.attachToNextSegment(this);
 		}
 	}else{	//Check if my position is at the line source
-		var dist = p5.Vector.dist(this.pos, this.line.source.pos);
-		if(dist <= 5){
-			this.fromStoT = true;
+		var dist = p5.Vector.dist(this.pos, this.currentSegment.source.pos);
+
+		if(dist <= 0){
+			this.line.attachToNextSegment(this);
 		}
 	}
 }
