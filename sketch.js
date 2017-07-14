@@ -10,6 +10,12 @@ var mouse;
 var controls = {};
 
 
+// Creating a new segment variables
+var segmentstart;
+var segmentend;
+var creatingSegment = false;
+
+
 function setup(){
 	createCanvas(500,500);
 	textSize(20);
@@ -93,7 +99,7 @@ function cancelCreatingLine(){
 
 
 
-function mouseClicked(){
+function mousePressed(){
 
 	if(mouseX < 500 && mouseY < 500){ //It is inside the canvas?
 
@@ -105,13 +111,63 @@ function mouseClicked(){
 			stations.push(s);
 
 			cancelCreatingStation();
+		}else{
+
+
+
+			//Did the user click a station?
+			var clickedStation = clickingStation();
+
+			console.log("clickedStation", clickedStation);
+
+			if(clickedStation != undefined){
+
+				//Creating a new segment
+				creatingSegment = true;
+				segmentstart = clickedStation;
+			}
+
 		}
 	}
 
-
-	
 }
 
+function mouseReleased(){
+
+	if(creatingSegment == true){
+
+		var endstation = clickingStation();
+
+		if(endstation != undefined && endstation != segmentstart){
+			//CReate a segment between segmentstart y segmentend
+			//Read the line froms segmentstart
+
+
+			//FIX THIS
+			var line = lines[0];
+			//var line = segmentstart.parent;
+			//console.log(segmentstart, line);
+
+			var newSegment = new LineSegment(segmentstart, endstation);
+			line.addSegment(newSegment);
+		}
+
+		creatingSegment = false;
+		segmentstart = undefined;
+		segmentend = undefined;
+	}
+}
+
+function clickingStation(){
+	for(var i = 0; i < stations.length; i++){
+		var s = stations[i];
+
+		if(s.mouseIn()){
+			return s;
+		}
+	}
+	return undefined;
+}
 /*
 function createTest(){
 	var scount = 20;
