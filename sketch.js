@@ -43,7 +43,7 @@ function createTest(){
 
 
 	//Create a line
-	var line = new Line(s,v);
+	var line = new Line();
 
 	//Create the segments
 	var s1 = new LineSegment(s,t);

@@ -8,14 +8,14 @@ A line has multiple segment limits.
 It has a initial station and a final station
 */
 
-function Line(initialStation, finalStation){
+function Line(){
 	this.segments = [];
 
 	this.color = new Color(255, 0, 0);
 
 
-	this.start = initialStation;
-	this.end = finalStation;
+	this.start = undefined;
+	this.end = undefined;
 }
 
 
@@ -33,6 +33,14 @@ Line.prototype.display = function(){
 Line.prototype.addSegment = function(s){
 	this.segments.push(s);
 	s.parent = this;
+
+	this.updateStartAndEnd();
+}
+
+
+Line.prototype.updateStartAndEnd = function(s){
+	this.start = this.segments[0].source;
+	this.end = this.segments[this.segments.length -1].target;
 }
 
 
