@@ -4,8 +4,8 @@
 //-------------------
 
 function Station(x,y){
-	this.pos = createVector(x,y);
-	this.size = 15;
+	this.pos = createVector(x,y);	//Position
+	this.size = 15;								//Icon size
 }
 
 
@@ -22,7 +22,7 @@ Station.prototype.mouseIn = function(){
 	mouse.y = mouseY;
 
 	var dist = p5.Vector.dist(this.pos, mouse);
-	
+
 	if(dist <= this.size){
 		return true;
 	}else{

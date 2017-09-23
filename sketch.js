@@ -12,7 +12,7 @@ var controls = {};
 
 // Creating a new segment variables
 var segmentstart;
-var segmentend;
+
 var creatingSegment = false;
 
 
@@ -20,12 +20,12 @@ function setup(){
 	createCanvas(500,500);
 	textSize(20);
 	createTest();
-	
+
 	mouse = createVector(0,0);
 
 
 	createControls();
-	
+
 }
 
 
@@ -93,7 +93,7 @@ function setCreatingLine(){
 
 
 function cancelCreatingLine(){
-	
+
 }
 
 
@@ -136,9 +136,9 @@ function mouseReleased(){
 
 	if(creatingSegment == true){
 
-		var endstation = clickingStation();
+		var segmentEnd = clickingStation();
 
-		if(endstation != undefined && endstation != segmentstart){
+		if(segmentEnd != undefined && segmentEnd != segmentstart){
 			//CReate a segment between segmentstart y segmentend
 			//Read the line froms segmentstart
 
@@ -148,7 +148,7 @@ function mouseReleased(){
 			//var line = segmentstart.parent;
 			//console.log(segmentstart, line);
 
-			var newSegment = new LineSegment(segmentstart, endstation);
+			var newSegment = new LineSegment(segmentstart, segmentEnd);
 			line.addSegment(newSegment);
 		}
 
@@ -171,23 +171,23 @@ function clickingStation(){
 /*
 function createTest(){
 	var scount = 20;
-	
+
 	for(var i = 0; i< scount; i++){
 			var s = new Station(random(0,500), random(0,500));
 			stations.push(s);
 	}
-	
+
 	console.log("I have " + stations.length + " stations");
-	
-	
+
+
 	var trainCount = 0;
-	
+
 	for(var i = 0; i< stations.length; i++){
 		var station = stations[i];
 		console.log("I prepare the station " +i);
-		
+
 		var linesFromHere =Math.floor(random(0,5));
-		
+
 		console.log("Lines", linesFromHere);
 		for(var l = 0; l< linesFromHere; l++){
 			//Get a randon index
@@ -196,43 +196,44 @@ function createTest(){
 			if(toStation != station){
 				var line = new LineSegment(station,toStation);
 				lines.push(line);
-				
-				
+
+
 				//Add the train to this line
 				var train = new Train(line);
 				trains.push(train);
-				
+
 				train.setId(""+ trainCount);
 				trainCount++;
 			}
 		}
-		
+
 	}
 }*/
 
 function draw(){
 	background(51);
-	
+
+	//Display all lines
 	for(var i = 0; i< lines.length; i++){
 		var l = lines[i];
 		l.display();
 	}
-	
-	
-	
+
+	//Display all the stations
 	for(var i = 0; i< stations.length; i++){
 		var s = stations[i];
 		s.display();
 	}
-	
 
+
+	//Update and display all the trains
 	for(var i = 0; i< trains.length; i++){
 		var t = trains[i];
 		t.update();
 		t.display();
 	}
 
-
+	//Draw the tooltip for the lines
 	this.drawLinesInfo();
 }
 
@@ -258,16 +259,10 @@ function drawLinesInfo(){
 
 	for(var i = 0; i< lines.length; i++){
 		var l = lines[i];
-		
+
 		l.color.setFill();
 		stroke(0);
 		rect(0, rectStart + (i * hdiv), infoW, infoH);
 	}
 
 }
-
-
-
-
-
-

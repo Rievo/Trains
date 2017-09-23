@@ -1,3 +1,8 @@
+
+/*
+		A segment that goes from one station (source) to other (target)
+*/
+
 function LineSegment(s, t){
 	this.source = s;
 	this.target = t;
